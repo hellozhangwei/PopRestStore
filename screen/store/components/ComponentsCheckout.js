@@ -170,9 +170,9 @@ storeComps.CheckOutPage = {
                         this.listShippingOptions = data.shippingOptions;
 
                         for (var i in this.listShippingOptions) {
-                            if (!!this.listShippingOptions[i].shippingTotal) {
+                            //if (!!this.listShippingOptions[i].shippingTotal) {
                                 this.listShippingOptions[i].shippingTotal = parseFloat(this.listShippingOptions[i].shippingTotal).toFixed(2);
-                            }
+                            //}
                         }
 
                         if(this.shippingMethod.shipmentMethodDescription === undefined){

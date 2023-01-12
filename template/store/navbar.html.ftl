@@ -1,8 +1,11 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="d-flex flex-column moqui-navbar">
-        <div class="container d-flex flex-row main-navbar">         
-                <#--  This renders the logo dynamically for the main store  -->
-                
+        <div class="container d-flex flex-row main-navbar">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav_collapse1"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button><!--used for mobile-->
+
             <#assign headerLogoList = sri.getThemeValues("STRT_HEADER_LOGO")>
             <#if headerLogoList?has_content>
                 <a href="${sri.buildUrl("/store").getUrl()}" class="navbar-brand d-none d-sm-block">
@@ -10,13 +13,9 @@
                     <span class="font-italic navbar-title">${storeInfo.productStore.storeName}</span>
                 </a>
             </#if>
-            <a class="navbar-brand d-block d-sm-none" href="/store">
+            <a class="navbar-brand d-block d-sm-none" href="/store"><!--d-sm-none means Visible when smaller than Medium-->
                 <span class="font-italic navbar-title">POP Shop</span>
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav_collapse1" 
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
 
             <div class="navbar-collapse collapse">
                 <form id="form-search" class="search-input" action="#">
@@ -26,7 +25,7 @@
                     </button>
                 </form>
                 <!-- Right aligned nav items -->
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto"><!--control by @media (min-width: 768px) .navbar-expand-md .navbar-nav,  navigation links will never display horizontally until we add the .navbar-expand- {-sm|-md|-lg|-xl} class to our .navbar wrapper-->
                     <div class="text-secondary">
                         <span class="navbar-pop-title">Official POP Merchandise</span>
                         <span class="text-center navbar-pop-subtitle">Quality 100% Guaranted</span>
@@ -34,7 +33,7 @@
                 </ul>
             </div>
         </div>
-        <div id="nav_collapse1" class="container navbar-collapse collapse">
+        <div id="nav_collapse1" class="container navbar-collapse collapse bg-dark"><!--This is the wrapper that moves content into the collapse (mobile) menu.-->
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop <i class="fas fa-angle-down icon-down"></i></a>

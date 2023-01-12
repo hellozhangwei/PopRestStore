@@ -25,7 +25,7 @@
                                 <i class="fas fa-bullhorn"></i> Best Sellers</a></li>
                         </#if>
                     </ul>
-                    <hr width="180px" style="margin-left: -15px !important;">
+                    <hr >
                     <span class="deals-subtitle">Categories</span>
                     <ul class="deals-ul">
                         <#list browseRootCategoryInfo.subCategoryList as category>

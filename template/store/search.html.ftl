@@ -2,7 +2,10 @@
 productList = productSearchResults.productList
 productListCount = productSearchResults.productListCount
 productListPageSize = productSearchResults.productListPageSize
-productListPageRangeHigh = productSearchResults.productListPageRangeHigh>
+productListPageRangeHigh = productSearchResults.productListPageRangeHigh
+
+contentDocumentList = contentSearchResults.contentDocumentList
+>
 
 <div>
 	<div class="container">
@@ -98,6 +101,10 @@ productListPageRangeHigh = productSearchResults.productListPageRangeHigh>
                     </ul>
                 </nav>
                 </#if>
+
+                <#list contentDocumentList![] as localContent>
+                    <h1>${localContent.wikiPageId}</h1>
+                </#list>
             </div>
         </div>
     </div>
