@@ -144,6 +144,37 @@
     <hr>
 </div>
 
+<#if isVirtual>
+<div class="container mb-5">
+    <#assign featureTypes = variantsList.listFeatures.keySet()>
+    <#assign colorFeatures = [] />
+    <#assign sizeFeatures = [] />
+    <#list featureTypes![] as featureType>
+        <#assign variants = variantsList.listFeatures.get(featureType)>
+
+        <#list variants![] as variant>
+            <#if variant.productFeatureTypeEnumId=='PftColor'><#assign colorFeatures = colorFeatures + [variant]/></#if>
+            <#if variant.productFeatureTypeEnumId=='PftSize'><#assign sizeFeatures = sizeFeatures + [variant] /></#if>
+        </#list>
+        <#list colorFeatures![] as colorFeature>
+            <div class="row align-items-center border rounded mb-1 p-2">
+                <span style="width:50px"><h5>${colorFeature.description!}</h5></span>
+                <div class="d-flex col-6 col-md-4 ml-2 border-left">
+                    <#list sizeFeatures![] as sizeFeature>
+                        <div class="form-group mr-2">
+                            <label>${sizeFeature.abbrev}</label>
+                            <input type="text" size="2" name="${productId}_${colorFeature.abbrev}_${sizeFeature.abbrev}" class="form-control"/>
+                        </div>
+                    </#list>
+                </div>
+            </div>
+        </#list>
+    </#list>
+    <div class="form-group float-right">
+        <button class="btn">Submit</button>
+    </div>
+</div>
+</#if>
 <div class="container mb-5">
     <span class="modal-text">Customer Reviews</span>
 	<#list reviewsList.productReviewList as review>
