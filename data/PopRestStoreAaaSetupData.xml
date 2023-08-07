@@ -14,11 +14,17 @@ along with this software (see the LICENSE.md file). If not, see
 -->
 <entity-facade-xml type="seed-initial">
     <!-- ecommerce authz/permission for ALL users -->
-    <moqui.security.ArtifactGroup artifactGroupId="POPRS_API" description="POP REST Store (via root screen)"/>
+    <moqui.security.ArtifactGroup artifactGroupId="POPRS_API" description="POP REST Store API"/>
     <moqui.security.ArtifactGroupMember artifactGroupId="POPRS_API" artifactTypeEnumId="AT_REST_PATH"
             inheritAuthz="Y" artifactName="/pop"/>
     <moqui.security.ArtifactAuthz artifactAuthzId="POPRS_API_ALL" userGroupId="ALL_USERS" artifactGroupId="POPRS_API"
             authzTypeEnumId="AUTHZT_ALWAYS" authzActionEnumId="AUTHZA_ALL"/>
+
+    <moqui.security.ArtifactGroup artifactGroupId="POPRS_APP" description="POP REST Store App"/>
+    <moqui.security.ArtifactGroupMember artifactGroupId="POPRS_APP" artifactTypeEnumId="AT_XML_SCREEN"
+                                        inheritAuthz="Y" artifactName="component://PopRestStore/screen/store.xml"/>
+    <moqui.security.ArtifactAuthz artifactAuthzId="POPRS_APP_ALL" userGroupId="ADMIN" artifactGroupId="POPRS_APP"
+                                  authzTypeEnumId="AUTHZT_ALWAYS" authzActionEnumId="AUTHZA_ALL"/>
 
     <moqui.basic.Enumeration enumCode="homePath" description="Base path for store application" enumId="PsstHomePath" enumTypeId="ProductStoreSettingType"/>
     <moqui.basic.Enumeration enumCode="store_path" description="Base path for store's product list" enumId="PsstStorePath" enumTypeId="ProductStoreSettingType"/>
