@@ -16,6 +16,19 @@ along with this software (see the LICENSE.md file). If not, see
 
     <moqui.security.UserGroupMember userGroupId="UG_B2B_BUYER" userId="ORG_BLUTH_GOB" fromDate="1265184000000"/>
 
+    <mantle.party.Party partyId="ORG_BLUTH_BOB" partyTypeEnumId="PtyPerson"/>
+    <mantle.party.Person partyId="ORG_BLUTH_BOB" firstName="Bob" middleName="" lastName="Blue"/>
+    <mantle.party.PartyRole partyId="ORG_BLUTH_BOB" roleTypeId="ClientBilling"/>
+    <mantle.party.PartyRole partyId="ORG_BLUTH_BOB" roleTypeId="ClientManager"/>
+    <mantle.party.PartyRelationship partyRelationshipId="ORG_BLUTH_BOB_BL" relationshipTypeEnumId="PrtRepresentative"
+                                    fromPartyId="ORG_BLUTH_BOB" fromRoleTypeId="ClientBilling" toPartyId="ORG_BLUTH" toRoleTypeId="Customer"
+                                    fromDate="1265184000000"/>
+    <moqui.security.UserAccount userId="ORG_BLUTH_BOB" username="bob.blue" userFullName="Bob Blue"
+                                currentPassword="16ac58bbfa332c1c55bd98b53e60720bfa90d394" passwordHashType="SHA"
+                                passwordHint="framework name, lowercase" currencyUomId="USD" locale="en_US" timeZone="US/Pacific"
+                                emailAddress="bob.blue@test.com" partyId="ORG_BLUTH_BOB"/>
+    <moqui.security.UserGroupMember userGroupId="UG_B2B_BUYER" userId="ORG_BLUTH_BOB" fromDate="1265184000000"/>
+
     <!-- use a record like this to set a regex for hostname(s) that should map to a given store:
     <mantle.product.store.ProductStoreSetting productStoreId="POPC_DEFAULT" settingTypeEnumId="PsstHostname" fromDate="1406670784000" settingValue=".*"/> -->
 
