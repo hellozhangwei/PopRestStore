@@ -28,3 +28,10 @@ To add this component to Moqui the easiest approach is to use the Gradle get com
 Or add a dependency in your component.xml file like:
 
     <depends-on name="PopRestStore"/>
+# B2B eCommerce Usage
+
+1. Login with gob.bluth/moqui which party is (ORG_BLUTH_GOB: Gob Bluth)
+2. Add a product to cart
+3. Check the cart order in Marble ERP
+4. The orders' customer is ORG_BLUTH: Bluth Corp
+
