@@ -29,6 +29,29 @@ along with this software (see the LICENSE.md file). If not, see
                 <field-map field-name="partyId" from="ec.user.userId"/>
             </entity-find-one>
         </if>
+
+        <!--Find party's organization-->
+        <!--<mantle.party.PartyRelationship partyRelationshipId="ORG_BLUTH_GOB_BL" relationshipTypeEnumId="PrtRepresentative"
+                                        fromPartyId="ORG_BLUTH_GOB" fromRoleTypeId="ClientBilling" toPartyId="ORG_BLUTH" toRoleTypeId="Customer"
+                                        fromDate="1265184000000"/>
+        <mantle.party.PartyRelationship partyRelationshipId="ORG_BLUTH_GOB_MGR" relationshipTypeEnumId="PrtRepresentative"
+                                        fromPartyId="ORG_BLUTH_GOB" fromRoleTypeId="ClientManager" toPartyId="ORG_BLUTH" toRoleTypeId="Customer"
+                                        fromDate="1265184000000"/>-->
+        <entity-find entity-name="mantle.party.PartyRelationship" list="toRelList">
+        <!-- <entity-find entity-name="mantle.party.PartyToAndRelationship" list="toRelList">-->
+        <!--<econdition field-name="partyTypeEnumId" value="PtyOrganization"/>-->
+        <!--<econdition field-name="relationshipTypeEnumId" operator="in" value="PrtAgent,PrtEmployee,PrtMember"/>-->
+        <!--<econdition field-name="toRoleTypeId" value="OrgInternal"/>-->
+            <econdition field-name="fromPartyId" from="ec.user.userAccount.partyId"/>
+            <date-filter/>
+        </entity-find>
+        <if condition="toRelList">
+            <script>
+                ec.user.context.buyerOrgId = toRelList[0].toPartyId
+            </script>
+
+        </if>
+
     </always-actions>
 
     <transition name="config.js" read-only="true">

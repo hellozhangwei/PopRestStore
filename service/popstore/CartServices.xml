@@ -357,7 +357,7 @@ General Order Placement and eCommerce Usage
             <set field="productStoreId" from="sessionAttributes.productStoreId"/>
             <!-- TODO: if no productStoreId lookup somehow? should be set from initial call to content/config.js transition -->
 
-            <set field="customerPartyId" from="ec.user.userAccount?.partyId ?: sessionAttributes.customerPartyId"/>
+            <set field="customerPartyId" from="ec.user.context.buyerOrgId ?: sessionAttributes.customerPartyId"/>
             <set field="sessionAttributes.customerPartyId" from="customerPartyId"/>
 
             <if condition="!cartOrderId &amp;&amp; customerPartyId">

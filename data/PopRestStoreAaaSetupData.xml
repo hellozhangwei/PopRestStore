@@ -26,6 +26,10 @@ along with this software (see the LICENSE.md file). If not, see
     <moqui.security.ArtifactAuthz artifactAuthzId="POPRS_APP_ALL" userGroupId="ADMIN" artifactGroupId="POPRS_APP"
                                   authzTypeEnumId="AUTHZT_ALWAYS" authzActionEnumId="AUTHZA_ALL"/>
 
+    <userGroups userGroupId="UG_B2B_BUYER" description="Organization Buyer">
+        <authz artifactAuthzId="AA_BUYER_B2B" artifactGroupId="POPRS_APP"  authzTypeEnumId="AUTHZT_ALLOW" authzActionEnumId="AUTHZA_ALL"/>
+    </userGroups>
+
     <moqui.basic.Enumeration enumCode="homePath" description="Base path for store application" enumId="PsstHomePath" enumTypeId="ProductStoreSettingType"/>
     <moqui.basic.Enumeration enumCode="store_path" description="Base path for store's product list" enumId="PsstStorePath" enumTypeId="ProductStoreSettingType"/>
 
