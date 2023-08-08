@@ -43,6 +43,22 @@ along with this software (see the LICENSE.md file). If not, see
             <set field="apiKey" from="ec.user.getLoginKey()"/>
         </actions>
     </service>
+
+    <service verb="get" noun="CustomerPartyId">
+        <out-parameters>
+            <parameter name="customerPartyId"/>
+        </out-parameters>
+        <actions>
+            <if condition="ec.user.userAccount != null">
+                <entity-find entity-name="mantle.party.PartyRelationship" list="toRelList">
+                    <econdition field-name="fromPartyId" from="ec.user.userAccount.partyId"/>
+                    <date-filter/>
+                </entity-find>
+                <set field="customerPartyId" from="toRelList?.first?.toPartyId"/>
+            </if>
+        </actions>
+    </service>
+
     <service verb="postLogin" noun="Customer">
         <out-parameters>
             <parameter name="moquiSessionToken"/>
@@ -327,7 +343,8 @@ along with this software (see the LICENSE.md file). If not, see
         <actions>
             <!-- NOTE: use the web session for attributes such as customerPartyId for security; this won't work in a stateless mode or outside a web session -->
             <set field="sessionAttributes" from="ec.web.sessionAttributes"/>
-            <set field="partyId" from="ec.user.userAccount?.partyId ?: sessionAttributes.customerPartyId"/>
+            <service-call name="popstore.CustomerServices.get#CustomerPartyId" out-map="cust"/>
+            <set field="partyId" from="cust?.partyId ?: sessionAttributes.customerPartyId"/>
             <if condition="!partyId"><return message="No active customer"/></if>
 
             <service-call name="mantle.account.PaymentMethodServices.get#PartyPaymentMethodInfoList"
@@ -408,7 +425,8 @@ along with this software (see the LICENSE.md file). If not, see
         <actions>
             <!-- NOTE: use the web session for attributes such as customerPartyId for security; this won't work in a stateless mode or outside a web session -->
             <set field="sessionAttributes" from="ec.web.sessionAttributes"/>
-            <set field="partyId" from="ec.user.userAccount?.partyId ?: sessionAttributes.customerPartyId"/>
+            <service-call name="popstore.CustomerServices.get#CustomerPartyId" out-map="cust"/>
+            <set field="partyId" from="cust?.partyId ?: sessionAttributes.customerPartyId"/>
             <if condition="!partyId"><return message="No active customer"/></if>
 
             <service-call name="mantle.party.ContactServices.get#PartyContactInfoList" out-map="shippingContactListInfo"
