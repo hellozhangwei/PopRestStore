@@ -66,7 +66,7 @@ along with this software (see the LICENSE.md file). If not, see
         </out-parameters>
         <actions>
             <if condition="ec.user.userAccount != null">
-                <set field="customerPartyId" from="ec.user.userAccount.partyId"/>
+                <service-call name="popstore.CustomerServices.get#CustomerPartyId" out-map="context"/>
                 <!-- NOTE: use the web session for attributes such as cartOrderId for security; this won't work in a stateless mode or outside a web session -->
                 <set field="sessionAttributes" from="ec.web.sessionAttributes"/>
                 <set field="sessionAttributes.customerPartyId" from="customerPartyId"/>

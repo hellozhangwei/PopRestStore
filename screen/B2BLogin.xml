@@ -16,42 +16,7 @@ along with this software (see the LICENSE.md file). If not, see
         default-menu-include="false" require-authentication="anonymous-all" history="false">
 
     <transition name="login" require-session-token="false">
-        <actions>
-            <script>ec.user.loginUser(username, password)</script>
-            <if condition="ec.user.userAccount">
-                <!-- TODO: move this to a service so that screen.@require-authentication can be false instead of anonymous-all (slightly tighter security) -->
-                <!-- see if there is an open order for user and get that ID into session -->
-                <entity-find entity-name="mantle.order.OrderHeaderAndPart" list="existingOrderList">
-                    <econdition field-name="statusId" value="OrderOpen"/>
-                    <econdition field-name="customerPartyId" from="ec.user.userAccount.partyId"/>
-                    <select-field field-name="orderId"/><select-field field-name="orderPartSeqId"/>
-                    <order-by field-name="-entryDate"/><!-- get most recent open order -->
-                </entity-find>
-                <if condition="existingOrderList">
-                    <if condition="ec.web.sessionAttributes.cartOrderId">
-                        <!-- if a cartOrderId is in the session, merge its items into the existing order -->
-                        <service-call name="mantle.order.OrderServices.merge#OrderItems"
-                                      in-map="[orderId:existingOrderList[0].orderId, fromOrderId:ec.web.sessionAttributes.cartOrderId]"/>
-                    </if>
-                    <!-- whether there was one in the session or not always set the existing orderId there -->
-                    <set field="ec.web.sessionAttributes.cartOrderId" from="existingOrderList[0].orderId"/>
-
-                    <else>
-                        <!-- no existing open order, if a cartOrderId is in the session set the logged in user as the customer -->
-                        <if condition="ec.web.sessionAttributes.cartOrderId">
-                            <entity-find entity-name="OrderPart" list="orderPartList">
-                                <econdition field-name="orderId" from="ec.web.sessionAttributes.cartOrderId"/>
-                            </entity-find>
-                            <if condition="orderPartList">
-                                <set field="orderPart" from="orderPartList[0]"/>
-                                <set field="orderPart.customerPartyId" from="ec.user.userAccount.partyId"/>
-                                <entity-update value-field="orderPart"/>
-                            </if>
-                        </if>
-                    </else>
-                </if>
-            </if>
-        </actions>
+        <service-call name="popstore.CustomerServices.login#Customer" in-map="context" out-map="context"/>
         <default-response type="screen-last"/>
         <error-response url="."/>
     </transition>
