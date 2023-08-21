@@ -145,7 +145,12 @@
 </div>
 
 <#if isVirtual>
-<div class="container mb-5">
+<form method="post" action="/store/product/addVariantToCart">
+    <input type="hidden" value="${ec.web.sessionToken}" name="moquiSessionToken"/>
+    <input type="hidden" value="${product.pseudoId}" name="productId"/>
+    <input type="hidden" value="${product.priceUomId}" name="currencyUomId" />
+
+    <div class="container mb-5">
     <#assign featureTypes = variantsList.listFeatures.keySet()>
     <#assign colorFeatures = [] />
     <#assign sizeFeatures = [] />
@@ -163,7 +168,7 @@
                     <#list sizeFeatures![] as sizeFeature>
                         <div class="form-group mr-2">
                             <label>${sizeFeature.abbrev}</label>
-                            <input type="text" size="2" name="${productId}_${colorFeature.abbrev}_${sizeFeature.abbrev}" class="form-control"/>
+                            <input type="text" size="2" name="productId_${productId}_${colorFeature.abbrev}_${sizeFeature.abbrev}" class="form-control"/>
                         </div>
                     </#list>
                 </div>
@@ -171,9 +176,10 @@
         </#list>
     </#list>
     <div class="form-group float-right">
-        <button class="btn">Submit</button>
+        <button class="btn" type="submit">Submit</button>
     </div>
 </div>
+</form>
 </#if>
 <div class="container mb-5">
     <span class="modal-text">Customer Reviews</span>

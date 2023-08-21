@@ -33,6 +33,34 @@ along with this software (see the LICENSE.md file). If not, see
         <error-response url="."/>
     </transition>
 
+    <transition name="addVariantToCart">
+        <actions>
+            <iterate list="ec.web.request.getParameterNames()" entry="parameterName">
+                <if condition="parameterName.startsWith('productId_')">
+
+                    <set field="productId" from="parameterName.replace('productId_', '')"/>
+                    <set field="quantity" from="ec.web.request.getParameter(parameterName)"/>
+                    <log message="======parameterName=========${parameterName}"/>
+                    <log message="======productId=========${productId}"/>
+                    <log message="======quantity=========${quantity}"/>
+                    <if condition="quantity">
+                        <service-call name="popstore.CartServices.add#Product" out-map="addOut"
+                                      in-map="[productId:productId, quantity:quantity, currencyUomId:currencyUomId, productStoreId: productStoreId]"/>
+                        <set field="addedCorrect" from="false"/>
+                        <if condition="addOut.orderHeader != null">
+                            <set field="addedCorrect" from="true"/>
+                        </if>
+                    </if>
+                </if>
+            </iterate>
+
+        </actions>
+        <conditional-response url="."><condition><expression>categoryId != null</expression></condition><parameter name="categoryId"/><parameter name="addedCorrect"/></conditional-response>
+        <conditional-response url="."><condition><expression>searchParameter != null</expression></condition><parameter name="searchParameter"/><parameter name="addedCorrect"/></conditional-response>
+        <default-response url="."><parameter name="addedCorrect"/></default-response>
+        <error-response url="."/>
+    </transition>
+
     <transition name="removeCartItem">
         <actions>
             <service-call name="popstore.CartServices.delete#OrderItem" in-map="[orderId: orderId, orderItemSeqId: orderItemSeqId]"/>
